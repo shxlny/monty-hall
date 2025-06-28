@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Парадокс Монти Холла</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Парадокс Монти Холла</h1>
+    <div class="doors">
+      <div class="door" data-door="1"></div>
+      <div class="door" data-door="2"></div>
+      <div class="door" data-door="3"></div>
+    </div>
+    <div class="message">Выберите дверь</div>
+    <div class="buttons">
+      <button id="switch" disabled>Изменить выбор</button>
+      <button id="stay" disabled>Оставить выбор</button>
+    </div>
+    <button id="reset">Новая игра</button>
+
+    <script>
+      let carDoor, selectedDoor, openedDoor;
+      const doors = document.querySelectorAll(".door");
+      const messageEl = document.querySelector(".message");
+      const switchBtn = document.getElementById("switch");
+      const stayBtn = document.getElementById("stay");
+      const resetBtn = document.getElementById("reset");
+
+      function newGame() {
+        carDoor = Math.floor(Math.random() * 3) + 1;
+        selectedDoor = null;
+        openedDoor = null;
+
+        doors.forEach((door) => {
+          door.className = "door";
+          door.textContent = `Дверь ${door.dataset.door}`;
+          door.onclick = selectDoor;
+        });
+
+        messageEl.textContent = "Выберите дверь";
+        switchBtn.disabled = true;
+        stayBtn.disabled = true;
+      }
+
+      function selectDoor(e) {
+        selectedDoor = parseInt(e.target.dataset.door);
+
+        let availableDoors = [1, 2, 3].filter(
+          (d) => d !== selectedDoor && d !== carDoor
+        );
+        openedDoor =
+          availableDoors[Math.floor(Math.random() * availableDoors.length)];
+
+        const openedDoorEl = document.querySelector(
+          `[data-door="${openedDoor}"]`
+        );
+        openedDoorEl.className = "door goat";
+        openedDoorEl.textContent = "";
+
+        messageEl.textContent = `Я открыл дверь ${openedDoor} с козой. Хотите изменить выбор?`;
+        switchBtn.disabled = false;
+        stayBtn.disabled = false;
+
+        doors.forEach((door) => {
+          door.onclick = null;
+        });
+      }
+
+      function revealResult(switchDoor) {
+        let finalDoor = switchDoor
+          ? [1, 2, 3].find((d) => d !== selectedDoor && d !== openedDoor)
+          : selectedDoor;
+
+        doors.forEach((door) => {
+          const doorNum = parseInt(door.dataset.door);
+          if (doorNum === carDoor) {
+            door.className = "door car";
+            door.textContent = "";
+          } else if (doorNum !== openedDoor) {
+            door.className = "door goat";
+            door.textContent = "";
+          }
+        });
+
+        if (finalDoor === carDoor) {
+          messageEl.textContent = "Поздравляем! Вы выиграли автомобиль!";
+        } else {
+          messageEl.textContent = "К сожалению, вы проиграли.";
+        }
+
+        switchBtn.disabled = true;
+        stayBtn.disabled = true;
+      }
+
+      switchBtn.addEventListener("click", () => revealResult(true));
+      stayBtn.addEventListener("click", () => revealResult(false));
+      resetBtn.addEventListener("click", newGame);
+
+      newGame();
+    </script>
+  </body>
+</html>

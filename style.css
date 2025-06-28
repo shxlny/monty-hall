@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e5799, #2989d8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.doors {
+  display: flex;
+  gap: 2vw;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.door {
+  width: 30vw;
+  height: 60vh;
+  max-width: 400px;
+  max-height: 600px;
+  border: 10px solid #5d2906;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background-image: url("door.svg");
+  background-size: 80% 80%; /* Изменено с cover на 80% */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #8b4513; /* Добавлен фоновый цвет */
+  color: transparent !important;
+  font-size: 0 !important;
+  text-indent: -9999px !important;
+}
+
+.door:hover {
+  transform: translateY(-5px);
+}
+
+.door.car {
+  background-image: url("car.svg");
+  background-size: 70% 70%; /* Размер для автомобиля */
+  border-color: #4caf50;
+  background-color: #77bb87; /* Фон для автомобиля */
+}
+
+.door.goat {
+  background-image: url("goat.svg");
+  background-size: 70% 70%; /* Размер для козы */
+  border-color: #f44336;
+  background-color: #e39399; /* Фон для козы */
+}
+
+.message {
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  min-height: 3rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(to right, #4caf50, #2e8b57);
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+#reset {
+  background: linear-gradient(to right, #f44336, #d32f2f);
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .doors {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .door {
+    width: 80vw;
+    height: 20vh;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
